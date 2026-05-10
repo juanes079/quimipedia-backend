@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nombre    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Producto {
+  id           Int           @id @default(autoincrement())
+  nombre       String
+  tipo         String
+  color        String        @default("#3b82f6")
+  stock        Float         @default(0)
+  precioVenta  Float?
+  ingredientes Ingrediente[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Ingrediente {
+  id         Int      @id @default(autoincrement())
+  nombre     String
+  cantidad   Float
+  unidad     String
+  precio     Float
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Cascade)
+}
+
+model MateriaPrima {
+  id             Int      @id @default(autoincrement())
+  nombre         String   @unique
+  unidad         String
+  precioUnitario Float
+  stockActual    Float
+  stockMinimo    Float
+  proveedorId    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Gasto {
+  id        Int      @id @default(autoincrement())
+  concepto  String
+  monto     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
