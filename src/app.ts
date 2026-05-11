@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes';
 import productosRoutes from './routes/productos.routes';
 import materiasPrimasRoutes from './routes/materias-primas.routes';
 import gastosRoutes from './routes/gastos.routes';
+import usuariosRoutes from './routes/usuarios.routes';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/productos', productosRoutes);
 app.use('/api/materias-primas', materiasPrimasRoutes);
 app.use('/api/gastos', gastosRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 
 app.use(errorHandler);
 
