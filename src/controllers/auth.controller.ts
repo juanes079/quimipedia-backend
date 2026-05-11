@@ -45,9 +45,18 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     const valido = await bcrypt.compare(password, user.password);
     if (!valido) { res.status(401).json({ error: 'Credenciales incorrectas' }); return; }
 
+    const token = generarToken(user.id);
     res.json({
-      token: generarToken(user.id),
-      user: { id: user.id, email: user.email, nombre: user.nombre },
+      success: true,
+      token,
+      usuario: {
+        id:           user.id,
+        email:        user.email,
+        nombre:       user.nombre,
+        rol:          'ADMIN',
+        empresaNombre: 'QuimiPedia',
+        permisos:     []
+      }
     });
   } catch (e) { next(e); }
 }
